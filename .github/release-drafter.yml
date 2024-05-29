@@ -1,0 +1,13 @@
+# Config for https://github.com/apps/release-drafter
+name-template: "v$NEXT_MINOR_VERSION"
+tag-template: "v$NEXT_MINOR_VERSION"
+template: |
+  ## Changes
+  $CHANGES
+  ## Upgrading
+  To upgrade, update the `source` in your module instantiation.
+  ```diff
+    module "<NAME>" {
+  -   source = "git@github.com:2uinc/tf-module-<INSERT_MODULE_NAME_HERE>.git?ref=$PREVIOUS_TAG"
+  +   source = "git@github.com:2uinc/tf-module-<INSERT_MODULE_NAME_HERE>.git?ref=v$NEXT_MINOR_VERSION"
+    }
