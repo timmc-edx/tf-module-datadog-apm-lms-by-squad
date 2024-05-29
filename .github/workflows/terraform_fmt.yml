@@ -1,0 +1,37 @@
+---
+name: 'Terraform FMT'
+
+on:
+  push:
+    branches-ignore: ['master']
+
+jobs:
+  terraform:
+    name: 'Terraform FMT'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        id: setup
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -recursive
+        continue-on-error: true
+
+      - name: add and commit
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: |
+          git config --global user.name 'GitHub Actions CI Deployment automation'
+          git config --global user.email 'admin@edx.org'
+          git add .
+          git diff --quiet && git diff --staged --quiet || (git add --all && git commit -am "chore: terraform fmt fix")
+          git push
