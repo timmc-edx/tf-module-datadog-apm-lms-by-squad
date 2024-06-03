@@ -26,8 +26,6 @@ ${var.apdex_additional_message}
 {{#is_alert}}
 
 ${var.recipients}
-
-{{#is_warning}}{{override_priority 'P${var.apdex_priority_warning}'}}{{/is_warning}}
 EOMESSAGE
 
   # apdex: (satisfied + tolerated/2) / all
@@ -45,7 +43,6 @@ EOQUERY
 
   monitor_thresholds {
     critical = var.apdex_threshold_critical
-    warning  = var.apdex_threshold_warning
   }
 
   include_tags      = false
@@ -56,5 +53,8 @@ EOQUERY
   new_group_delay   = 0
   priority          = var.apdex_priority_critical
 
-  tags = concat(["env:${var.env}", "service:edx-edxapp-lms", "terraform-managed"], var.additional_tags)
+  tags = concat(
+    ["env:${var.env}", "service:edx-edxapp-lms", "terraform-managed"],
+    coalesce(var.additional_tags, [])
+  )
 }
