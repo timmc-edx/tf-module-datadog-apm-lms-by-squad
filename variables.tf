@@ -14,8 +14,13 @@ variable "recipients" {
   default     = ""
 }
 
-variable "apdex_additional_request_filter" {
-  description = "Any additional trace query terms to filter on for apdex monitoring"
+variable "tags" {
+  description = "Additional tags, as name:value pairs -- should include at least team:my-team"
+  type        = list(string)
+}
+
+variable "apdex_add_request_filter" {
+  description = "Additional trace query terms to filter on for apdex monitoring"
   type        = string
   default     = ""
 }
@@ -56,14 +61,8 @@ variable "apdex_priority_critical" {
   default     = 2
 }
 
-variable "apdex_additional_message" {
-  description = "Any additional information to add to the apdex alert messages."
+variable "apdex_add_message" {
+  description = "Additional information to add to the apdex alert messages."
   type        = string
   default     = ""
-}
-
-variable "additional_tags" {
-  description = "Any additional tags, as name:value pairs -- should include at least team:my-team"
-  type        = list(string)
-  default     = []
 }
