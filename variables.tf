@@ -62,13 +62,8 @@ variable "apdex_additional_message" {
   default     = ""
 }
 
-variable "team_tag" {
-  description = "Team associated with this monitor, for tagging purposes, e.g. arch-bom"
-  type        = string
-}
-
 variable "additional_tags" {
-  description = "Any additional tags, as name:value pairs"
+  description = "Any additional tags, as name:value pairs -- should include at least team:my-team"
   type        = list(string)
   default     = []
 }
